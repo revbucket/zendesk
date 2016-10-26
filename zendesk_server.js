@@ -32,7 +32,7 @@ var getAccessToken = function (query) {
   var response;
   try {
     response = HTTP.post(
-      "https://maestroiq.zendesk.com/oauth/tokens", {
+      "https://" + Meteor.settings.public.zendeskSubdomain + ".zendesk.com/oauth/tokens", {
         headers: {
           'Content-Type': 'application/json'
         },
@@ -61,7 +61,7 @@ var getAccessToken = function (query) {
 var getIdentity = function (accessToken) {
   try {
     return HTTP.get(
-      "https://maestroiq.zendesk.com/api/v2/users/me.json", {
+      "https://" + Meteor.settings.public.zendeskSubdomain + ".zendesk.com/api/v2/users/me.json", {
         params: {access_token: accessToken}
       }).data;
   } catch (err) {

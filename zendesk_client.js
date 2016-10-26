@@ -27,7 +27,7 @@ Zendesk.requestCredential = function (options, credentialRequestCompleteCallback
 
   //https://{subdomain}.zendesk.com/oauth/authorizations/new?response_type=token&client_id={your_unique_identifier}&scope=read%20write
   var loginUrl =
-    'https://maestroiq.zendesk.com/oauth/authorizations/new' +
+    'https://' + Meteor.settings.public.zendeskSubdomain + '.zendesk.com/oauth/authorizations/new' +
     '?response_type=code' +
 
     '&client_id=' + config.clientId +
