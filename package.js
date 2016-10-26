@@ -1,6 +1,9 @@
 Package.describe({
+  name: "revbucket:zendesk",
   summary: "Zendesk OAuth flow",
   version: '1.1.0'
+  documentation: 'README.md',
+  git: 'https://github.com/revbucket/zendesk.git'
 });
 
 Package.onUse(function(api) {
