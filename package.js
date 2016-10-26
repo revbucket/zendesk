@@ -1,19 +1,19 @@
 Package.describe({
   name: "revbucket:zendesk",
   summary: "Zendesk OAuth flow",
-  version: '1.1.0'
+  version: '1.1.0',
   documentation: 'README.md',
   git: 'https://github.com/revbucket/zendesk.git'
 });
 
 Package.onUse(function(api) {
-  api.use('http', ['client', 'server']);
+  api.use('http@1.2.10', ['client', 'server']);
   api.use('templating@1.2.13', 'client');
-  api.use('oauth2', ['client', 'server']);
-  api.use('oauth', ['client', 'server']);
-  api.use('random', 'client');
-  api.use('underscore', 'server');
-  api.use('service-configuration', ['client', 'server']);
+  api.use('oauth2@1.1.11', ['client', 'server']);
+  api.use('oauth@1.1.11', ['client', 'server']);
+  api.use('random@1.0.10', 'client');
+  api.use('underscore@1.0.3', 'server');
+  api.use('service-configuration@1.0.10', ['client', 'server']);
 
   api.export('Zendesk');
 
