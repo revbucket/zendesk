@@ -34,6 +34,20 @@ var getAccessToken = function (query, subdomain) {
     throw new ServiceConfiguration.ConfigError();
   var response;
   try {
+
+    // DEBUGGING STUFF
+    var urlToSend = "https://" + subdomain + ".zendesk.com/oauth/tokens";
+    var dataToSend = {
+          grant_type: 'authorization_code',
+          code: query.code,
+          client_id: config.clientId,
+          client_secret: OAuth.openSecret(config.secret),
+          redirect_uri: OAuth._redirectUri('zendesk', config),
+          scope: 'read'
+        };
+    console.log("URL TO SEND", urlToSend);
+    console.log("DATA TO SEND", dataToSend);
+
     response = HTTP.post(
       "https://" + subdomain + ".zendesk.com/oauth/tokens", {
         headers: {
