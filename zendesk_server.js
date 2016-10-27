@@ -33,20 +33,17 @@ var getAccessToken = function (query, subdomain) {
   if (!config)
     throw new ServiceConfiguration.ConfigError();
   var response;
+  console.log("PRE ACCESS TOKEN QUERY");
   try {
-
-    // DEBUGGING STUFF
-    var urlToSend = "https://" + subdomain + ".zendesk.com/oauth/tokens";
-    var dataToSend = {
+    var data =           {
           grant_type: 'authorization_code',
           code: query.code,
           client_id: config.clientId,
           client_secret: OAuth.openSecret(config.secret),
-          redirect_uri: OAuth._redirectUri('zendesk', config),
+          redirect_uri: OAuth._redirectUri('zendesk', config).replace('?close', ''), // FUCKIT YOLO
           scope: 'read'
-        };
-    console.log("URL TO SEND", urlToSend);
-    console.log("DATA TO SEND", dataToSend);
+        }
+    console.log("DATA TO SEND", data);
 
     response = HTTP.post(
       "https://" + subdomain + ".zendesk.com/oauth/tokens", {
@@ -59,7 +56,7 @@ var getAccessToken = function (query, subdomain) {
           code: query.code,
           client_id: config.clientId,
           client_secret: OAuth.openSecret(config.secret),
-          redirect_uri: OAuth._redirectUri('zendesk', config),
+          redirect_uri: OAuth._redirectUri('zendesk', config).replace('?close', ''), // FUCKIT YOLO
           scope: 'read'
         }
       });
