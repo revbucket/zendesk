@@ -1,10 +1,14 @@
 Zendesk = {};
 
 OAuth.registerService('zendesk', 2, null, function(query) {
-  var accessToken = getAccessToken(query);
-  var identity = getIdentity(accessToken);
+
+  const subdomain =  (decodeState(query.state) || {}).subdomain || Meteor.settings.public.zendeskSubdomain;
+
+  var accessToken = getAccessToken(query, subdomain);
+  var identity = getIdentity(accessToken, subdomain);
   const serviceData = {id: String(identity.user.id),
                        accessToken: OAuth.sealSecret(accessToken),
+                       subdomain: subdomain,
                       }
 
   _.forEach(['email', 'url', 'role'], function(el) {
@@ -24,15 +28,14 @@ var userAgent = "Meteor";
 if (Meteor.release)
   userAgent += "/" + Meteor.release;
 
-var getAccessToken = function (query) {
+var getAccessToken = function (query, subdomain) {
   var config = ServiceConfiguration.configurations.findOne({service: 'zendesk'});
   if (!config)
     throw new ServiceConfiguration.ConfigError();
-
   var response;
   try {
     response = HTTP.post(
-      "https://" + Meteor.settings.public.zendeskSubdomain + ".zendesk.com/oauth/tokens", {
+      "https://" + subdomain + ".zendesk.com/oauth/tokens", {
         headers: {
           'Content-Type': 'application/json'
         },
@@ -58,10 +61,10 @@ var getAccessToken = function (query) {
   }
 };
 
-var getIdentity = function (accessToken) {
+var getIdentity = function (accessToken, subdomain) {
   try {
     return HTTP.get(
-      "https://" + Meteor.settings.public.zendeskSubdomain + ".zendesk.com/api/v2/users/me.json", {
+      "https://" + subdomain + ".zendesk.com/api/v2/users/me.json", {
         params: {access_token: accessToken}
       }).data;
   } catch (err) {
@@ -69,6 +72,15 @@ var getIdentity = function (accessToken) {
                    {response: err.response});
   }
 };
+
+var decodeState = function(state) {
+  var res = [];
+  const arr = Base64.decode(state);
+  for (var i = 0; i < arr.length; i ++) {
+    res.push(String.fromCharCode(arr[i]));
+  }
+  return JSON.parse(res.join(""));
+}
 
 
 Zendesk.retrieveCredential = function(credentialToken, credentialSecret) {
