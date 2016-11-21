@@ -40,7 +40,7 @@ var getAccessToken = function (query, subdomain) {
           code: query.code,
           client_id: config.clientId,
           client_secret: OAuth.openSecret(config.secret),
-          redirect_uri: OAuth._redirectUri('zendesk', config).replace('?close', ''), // FUCKIT YOLO
+          redirect_uri: OAuth._redirectUri('zendesk', config),
           scope: 'read'
         }
     console.log("DATA TO SEND", data);
@@ -56,7 +56,7 @@ var getAccessToken = function (query, subdomain) {
           code: query.code,
           client_id: config.clientId,
           client_secret: OAuth.openSecret(config.secret),
-          redirect_uri: OAuth._redirectUri('zendesk', config).replace('?close', ''), // FUCKIT YOLO
+          redirect_uri: OAuth._redirectUri('zendesk', config),
           scope: 'read'
         }
       });

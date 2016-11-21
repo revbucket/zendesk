@@ -47,7 +47,7 @@ rate-limit@1.0.6
 reactive-var@1.0.11
 reload@1.1.11
 retry@1.0.9
-revbucket:zendesk@1.1.2
+revbucket:zendesk@1.1.4
 routepolicy@1.0.12
 service-configuration@1.0.11
 spacebars@1.0.13

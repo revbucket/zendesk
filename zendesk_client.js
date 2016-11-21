@@ -29,7 +29,7 @@ Zendesk.requestCredential = function (options, credentialRequestCompleteCallback
   var loginUrl =
     'https://' + subdomain + '.zendesk.com/oauth/authorizations/new' +
     '?response_type=code' +
-
+    '&redirect_uri=' + OAuth._redirectUri('zendesk', config) +
     '&client_id=' + config.clientId +
     '&scope=' + flatScope +
     '&state=' + Zendesk._stateParam(loginStyle, credentialToken, undefined,
