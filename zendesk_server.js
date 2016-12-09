@@ -33,7 +33,6 @@ var getAccessToken = function (query, subdomain) {
   if (!config)
     throw new ServiceConfiguration.ConfigError();
   var response;
-  console.log("PRE ACCESS TOKEN QUERY");
   try {
     var data =           {
           grant_type: 'authorization_code',
@@ -44,7 +43,7 @@ var getAccessToken = function (query, subdomain) {
           scope: 'read'
         }
     console.log("DATA TO SEND", data);
-
+    console.log("URL TO SEND IT TO", "https://" + subdomain + ".zendesk.com/oauth/tokens");
     response = HTTP.post(
       "https://" + subdomain + ".zendesk.com/oauth/tokens", {
         headers: {

@@ -35,6 +35,8 @@ Zendesk.requestCredential = function (options, credentialRequestCompleteCallback
     '&state=' + Zendesk._stateParam(loginStyle, credentialToken, undefined,
                                     subdomain) ;
 
+  console.log("Zendesk login initiated w/ URL: ", loginUrl);
+  console.log("LoginStyle", loginStyle);
   OAuth.launchLogin({
     loginService: "zendesk",
     loginStyle: loginStyle,
@@ -60,8 +62,9 @@ Zendesk._stateParam = function (loginStyle, credentialToken, redirectUrl,
   if (subdomain) {
     state.subdomain = subdomain;
   }
-  if (loginStyle === 'redirect')
+  if (loginStyle === 'redirect') {
     state.redirectUrl = redirectUrl || ('' + window.location);
+  }
 
   // Encode base64 as not all login services URI-encode the state
   // parameter when they pass it back to us.
