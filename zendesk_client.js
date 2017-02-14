@@ -52,12 +52,16 @@ Zendesk.requestCredential = function (options, credentialRequestCompleteCallback
 // This is identical to the OAuth._stateParam function with the added
 // functionality to handle subdomain passing
 Zendesk._stateParam = function (loginStyle, credentialToken, redirectUrl,
-                                subdomain) {
+                                subdomain, extraParams) {
   var state = {
     loginStyle: loginStyle,
     credentialToken: credentialToken,
     isCordova: Meteor.isCordova
   };
+
+  if (extraParams) {
+    state.extraParams = extraParams
+  }
 
   if (subdomain) {
     state.subdomain = subdomain;
@@ -71,5 +75,4 @@ Zendesk._stateParam = function (loginStyle, credentialToken, redirectUrl,
   // Use the 'base64' package here because 'btoa' isn't supported in IE8/9.
   return Base64.encode(JSON.stringify(state));
 };
-
 
